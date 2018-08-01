@@ -233,8 +233,8 @@
       <div class="col-sm-3 col-sm-offset-1">
         <ul class="nav nav-pills nav-stacked nav-pills search-list" role="tablist">
           <li ng-class="{'active': vm.view_tab == 'searchTab'}">
-            <button class="btn-sm bg-success" ng-click="vm.changeTab('searchTab')" href=""><b><span
-              class="glyphicon glyphicon-arrow-left"></span> Home</b></button>
+            <a class="btn-sm bg-success" href="#/"><b><span
+              class="glyphicon glyphicon-arrow-left"></span> Home</b></a>
           </li>
           <li ng-repeat="applicant in vm.applicants track by $index"
               ng-class="{'active': vm.view_tab == 'entityContent' + $index}">
