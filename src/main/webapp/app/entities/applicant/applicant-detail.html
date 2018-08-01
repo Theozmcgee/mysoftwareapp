@@ -1,0 +1,716 @@
+<div class="page-container">
+  <div class="row">
+    <div class="col-xs-6">
+      <h2 ng-hide="contactEditable">{{vm.applicant.firstName}} {{vm.applicant.middleName}} {{vm.applicant.lastName}}
+        <span ng-show="vm.applicant.nickName">"{{ vm.applicant.nickName }}"</span></h2>
+    </div>
+  </div>
+  <a class="text-warning" ui-sref="applicant-detail.hot-list">Add to Hot List <span
+    class="glyphicon glyphicon-flash text-danger"></span></a>
+  <!--Notes, Activities, and Duplicate buttons need to add functionality  -->
+  <br>
+  <div class="row">
+    <div class="applicant-info">
+      <div class="col-xs-6 well">
+        <div class="row">
+          <h3>Contact Info
+            <button ng-hide="vm.contactEditable" ng-click="vm.contactEditable = !vm.contactEditable" type="submit"
+                    class="btn btn-success btn-sm"><span class="glyphicon glyphicon-pencil"></span></button>
+            <button ng-show="vm.contactEditable" class="btn btn-success btn-sm" ng-click="vm.contactSave()">
+              save
+            </button>
+            <button ng-show="vm.contactEditable" class="btn btn-danger btn-sm" ng-click="vm.cancelContactSave()">
+              cancel
+            </button>
+          </h3>
+        </div>
+
+        <div class="row">
+          <div class="col-xs-4">
+            <div ng-hide="vm.contactEditable">
+              <span class="glyphicon glyphicon-user"><label>First Name:</label> {{vm.applicant.firstName}}</span>
+            </div>
+            <div ng-show="vm.contactEditable" class="form-group">
+              <span class="glyphicon glyphicon-user"><label>First Name:</label> <input type="text" class="form-control"
+                                                                                       ng-model="vm.applicant.firstName"></span>
+            </div>
+          </div>
+          <div class="col-xs-5">
+            <div ng-hide="vm.contactEditable"><span class="glyphicon glyphicon-user"><label>Last Name:</label> {{vm.applicant.lastName}}</span></div>
+            <div ng-show="vm.contactEditable">
+            <span class="glyphicon glyphicon-user"><label>Last Name:</label> <input type="text" class="form-control"
+                                                                                    ng-model="vm.applicant.lastName"></span>
+            </div>
+          </div>
+        </div>
+        <!-- CELL ---->
+        <div class="row">
+          <div class="col-xs-4">
+            <div class="phone">
+              <span ng-hide="vm.contactEditable"
+                    class="glyphicon glyphicon-phone"><label>Cell:</label> {{vm.applicant.cellPhone}}&nbsp</span>
+            </div>
+            <div ng-show="vm.contactEditable">
+              <span class="glyphicon glyphicon-phone"><label>Cell:</label> <input type="text" class="form-control"
+                                                                                  ng-model="vm.applicant.cellPhone"></span>
+            </div>
+          </div>
+          <div class="col-xs-5">
+            <span ng-hide="vm.contactEditable"
+                  class="glyphicon glyphicon-phone"><label>Home:</label> {{vm.applicant.homePhone}}&nbsp</span>
+            <div ng-show="vm.contactEditable">
+            <span class="glyphicon glyphicon-phone"><label>Home:</label> <input type="text" class="form-control"
+                                                                                ng-model="vm.applicant.homePhone"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-4">
+            <span ng-hide="vm.contactEditable"
+                  class="glyphicon glyphicon-phone"><label>Work:</label> {{vm.applicant.workPhone}}&nbsp</span>
+            <div ng-show="vm.contactEditable">
+              <span class="glyphicon glyphicon-phone"><label>Work:</label> <input type="text" class="form-control"
+                                                                                  ng-model="vm.applicant.workPhone"></span>
+            </div>
+          </div>
+        </div>
+        <div class="email">
+          <div class="row">
+            <div class="col-xs-4">
+              <span ng-hide="vm.contactEditable" class="glyphicon glyphicon-envelope">
+                <a href='mailto:{{vm.applicant.email1}}'>{{ vm.applicant.email1 }}</a></span>
+              <span ng-show="vm.contactEditable" class="glyphicon glyphicon-envelope">
+                        <input type="text" class="form-control" ng-model="vm.applicant.email1"></span>
+            </div>
+            <div class="col-xs-4">
+              <span ng-hide="vm.contactEditable" class="glyphicon glyphicon-envelope">
+                <a href='mailto:{{vm.applicant.email2}}'>{{ vm.applicant.email2 }}</a></span>
+              <span ng-show="vm.contactEditable" class="glyphicon glyphicon-envelope"> <input type="text" class="form-control" ng-model="vm.applicant.email2"></span>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+        <div><label>Address:</label>
+          <button ng-show="vm.contactEditable" ng-click="vm.addAddress();" class="addAddressbtn btn btn-success btn-xs">
+            <span class="glyphicon glyphicon-plus"></span>
+          </button>
+        </div>
+        <uib-tabset>
+          <uib-tab class="address" ng-repeat="address in vm.applicant.addresses track by $index">
+            <uib-tab-heading>
+              {{ $index +1 }}
+            </uib-tab-heading>
+            <div ng-hide="vm.contactEditable">
+              {{address.address1}}<br>
+              <span ng-show="address.address2">{{address.address2}}<br></span>
+              {{address.city}}, {{address.state}} {{address.zipCode}}<br>
+              {{address.country}}<br>
+            </div>
+            <div ng-show="vm.contactEditable">
+              <input type="text" ng-model="address.address1"><br>
+              <input type="text" ng-model="address.address2"><br>
+              <input type="text" ng-model="address.city"><select type="text" ng-model="address.state">
+              <option value="AL">Alabama</option>
+              <option value="AK">Alaska</option>
+              <option value="AZ">Arizona</option>
+              <option value="AR">Arkansas</option>
+              <option value="CA">California</option>
+              <option value="CO">Colorado</option>
+              <option value="CT">Connecticut</option>
+              <option value="DE">Delaware</option>
+              <option value="DC">District Of Columbia</option>
+              <option value="FL">Florida</option>
+              <option value="GA">Georgia</option>
+              <option value="HI">Hawaii</option>
+              <option value="ID">Idaho</option>
+              <option value="IL">Illinois</option>
+              <option value="IN">Indiana</option>
+              <option value="IA">Iowa</option>
+              <option value="KS">Kansas</option>
+              <option value="KY">Kentucky</option>
+              <option value="LA">Louisiana</option>
+              <option value="ME">Maine</option>
+              <option value="MD">Maryland</option>
+              <option value="MA">Massachusetts</option>
+              <option value="MI">Michigan</option>
+              <option value="MN">Minnesota</option>
+              <option value="MS">Mississippi</option>
+              <option value="MO">Missouri</option>
+              <option value="MT">Montana</option>
+              <option value="NE">Nebraska</option>
+              <option value="NV">Nevada</option>
+              <option value="NH">New Hampshire</option>
+              <option value="NJ">New Jersey</option>
+              <option value="NM">New Mexico</option>
+              <option value="NY">New York</option>
+              <option value="NC">North Carolina</option>
+              <option value="ND">North Dakota</option>
+              <option value="OH">Ohio</option>
+              <option value="OK">Oklahoma</option>
+              <option value="OR">Oregon</option>
+              <option value="PA">Pennsylvania</option>
+              <option value="RI">Rhode Island</option>
+              <option value="SC">South Carolina</option>
+              <option value="SD">South Dakota</option>
+              <option value="TN">Tennessee</option>
+              <option value="TX">Texas</option>
+              <option value="UT">Utah</option>
+              <option value="VT">Vermont</option>
+              <option value="VA">Virginia</option>
+              <option value="WA">Washington</option>
+              <option value="WV">West Virginia</option>
+              <option value="WI">Wisconsin</option>
+              <option value="WY">Wyoming</option>
+            </select><input type="text" ng-model="address.zipCode">
+              <button ng-click="vm.removeAddress($index);" class="deleteAddressbtn btn btn-danger btn-xs pull-right">
+                <span class="glyphicon glyphicon-minus"></span>
+              </button>
+            </div>
+          </uib-tab>
+        </uib-tabset>
+        </div>
+      </div>
+
+      <div class="col-md-5 well">
+        <div class="row">
+          <div class="col-md-8">
+          <h3>Person Type: Candidate</h3>
+          <label>Status: </label>
+          <span ng-hide="vm.contactEditable">{{ vm.applicant.applicantStatus.name }}</span>
+          <select ng-show="vm.contactEditable" class="form-control" ng-model="vm.applicant.applicantStatus"
+                  ng-options="option.name for option in vm.applicantStatuses track by option.id">
+          </select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+          <label>Referral Source: </label>
+          <span ng-hide="vm.contactEditable">{{ vm.applicant.referralSource }}</span>
+          <input ng-show="vm.contactEditable" class="form-control" type="text" ng-model="vm.applicant.referralSource">
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+          <label>Work Status: </label>
+          <select ng-show="vm.contactEditable" class="form-control" ng-model="vm.applicant.workStatus"
+                  ng-options="option.name for option in vm.workStatuses track by option.id">
+          </select>
+          <span ng-hide="vm.contactEditable">{{ vm.applicant.workStatus.name }}</span>
+          <span><input type="text" class="form-control" ng-show="vm.contactEditable" ng-model="vm.applicant.workStatusNotes"></span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-8">
+          <label>Comments: </label>
+          <div ng-repeat="applicantComments in vm.applicant.applicantCommentss track by $index">
+            {{applicantComments.description}}
+          </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!--------------------- ACTIVITIES   ------------------------------>
+  <!--------------------- ACTIVITIES   ------------------------------->
+  <div class="row">
+    <div class="applicant-activites well">
+      <h3>
+        <span>Pending Activities:</span>   <!-- addActivity() -->
+        <button ng-hide="addNewActivity" class="btn btn-success btn-sm" ui-sref="applicant-detail.activity">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </h3>
+
+      <div class="table-responsive">
+
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Status</th>
+            <th>Activity Date</th>
+            <th>Action/Comments</th>
+            <th>Hiring Contact</th>
+            <th>Company</th>
+            <th>Job</th>
+            <th>Created</th>
+            <th>User</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="animate-repeat"
+              ng-repeat="activity in vm.applicant.activities | filter:{status: 'Pending'} | orderBy:'-created' track by $index">
+            <td>
+              <select name="status" ng-model="activity.status" class="form-control" ng-change="vm.statusChange(activity)">
+                <option value="Pending">Pending</option>
+                <option value="Complete">Complete</option>
+              </select>
+            </td>
+            <td>
+              <span>
+                {{ activity.startDate | date:'MM-dd-yyyy HH:mm a' }}
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.action.name }} / {{ activity.comment}}
+              </span>
+            </td>
+            <td>
+              <span ng-repeat="people in activity.hiringContacts">
+                <a ui-sref="hiring-contact-detail({id:people.id})">{{ people.firstName }} {{ people.lastName }}{{$last ? '' : ', '}}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                <a ui-sref="company-detail({id: activity.company.id})">{{ activity.company.name }}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                <a ui-sref="job-order-detail({id: activity.jobOrder.id})">{{ activity.jobOrder.title }}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.createdDate | date:'MM-dd-yyyy HH:mm a'}}
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.user.firstName }}
+              </span>
+            </td>
+            <td style="white-space: nowrap">
+              <form editable-form name="openactivitiesform" onbeforesave="saveUser($data, user.id)"
+                    ng-show="openactivitiesform.$visible" class="form-buttons form-inline" shown="inserted == activity">
+                <button type="submit" ng-disabled="openactivitiesform.$waiting" class="btn btn-primary">
+                  save
+                </button>
+                <button type="button" ng-disabled="openactivitiesform.$waiting" ng-click="openactivitiesform.$cancel()"
+                        class="btn btn-default">
+                  cancel
+                </button>
+              </form>
+              <div class="buttons" ng-show="!openactivitiesform.$visible">
+                <button class="btn btn-success btn-xs" ng-click="vm.open(activity)"><span
+                  class="glyphicon glyphicon-pencil"></span></button>
+                <button class="btn btn-danger btn-xs" ng-click="vm.deleteActivity(activity)"><span
+                  class="glyphicon glyphicon-remove-circle"></span></button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <h3>
+        <span>Completed Activities:</span>
+      </h3>
+      <div class="table-responsive">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Status</th>
+            <th>Activity Date</th>
+            <th>Action/Comments</th>
+            <th>Hiring Contact</th>
+            <th>Company</th>
+            <th>Job</th>
+            <th>Created</th>
+            <th>User</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr class="animate-repeat"
+              ng-repeat="activity in vm.applicant.activities | filter:{status: 'Complete'} | orderBy:'-created' track by $index">
+            <td>
+              <select id="field_status" name="status" class="form-control" ng-model="activity.status" ng-change="vm.statusChange(activity)">
+                <option value="Pending">Pending</option>
+                <option value="Complete">Complete</option>
+              </select>
+            </td>
+            <td>
+              <span>
+                {{ activity.startDate | date:'MM-dd-yyyy' }}
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.action.name }} / {{ activity.comment}}
+              </span>
+            </td>
+            <td>
+              <span ng-repeat="people in activity.hiringContacts">
+                <a ui-sref="hiring-contact-detail({id:people.id})">{{ people.firstName }} {{ people.lastName }}{{$last ? '' : ', '}}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                <a ui-sref="company-detail({id: activity.company.id})">{{ activity.company.name }}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                <a ui-sref="job-order-detail({id: activity.job.id})">{{ activity.jobOrder.title }}</a>
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.createdDate | date:'MM-dd-yyyy HH:mm a' }}
+              </span>
+            </td>
+            <td>
+              <span>
+                {{ activity.user.firstName }}
+              </span>
+            </td>
+            <td style="white-space: nowrap">
+              <form editable-form name="closedactivitiesform" onbeforesave="saveUser($data, user.id)"
+                    ng-show="closedactivitiesform.$visible" class="form-buttons form-inline"
+                    shown="inserted == activity">
+                <button type="submit" ng-disabled="closedactivitiesform.$waiting" class="btn btn-primary">
+                  save
+                </button>
+                <button type="button" ng-disabled="closedactivitiesform.$waiting"
+                        ng-click="closedactivitiesform.$cancel()"
+                        class="btn btn-default">
+                  cancel
+                </button>
+              </form>
+              <div class="buttons" ng-show="!closedactivitiesform.$visible">
+                <button class="btn btn-success btn-xs" ng-click="vm.open(activity)"><span
+                  class="glyphicon glyphicon-pencil"></span></button>
+                <button class="btn btn-danger btn-xs" ng-click="vm.deleteActivity(activity)"><span
+                  class="glyphicon glyphicon-remove-circle"></span></button>
+              </div>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!--------------------- JOB ORDERS   ------------------------>
+  <div class="table-responsive well">
+    <table class="table table-striped">
+      <h3>
+        <span>Job Orders</span>
+        <button class="btn btn-success btn-xs" ui-sref="applicant-detail.job-order({id:vm.applicant.id})">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </h3>
+      <thead>
+      <tr>
+        <td>Position Title</td>
+        <td>Company</td>
+        <td>Status</td>
+        <td>Type</td>
+        <td>Compensation</td>
+        <td>Date Created</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="job in vm.applicant.jobOrders track by $index">
+        <td><a ui-sref="applicant-detail({id:job.id})">{{job.title}}</a></td>
+        <td>{{job.company.name}}</a></td>
+        <td>{{job.jobStatus}}</td>
+        <td>{{job.jobType}}</td>
+        <td>Salary: $ {{job.salary}}<br> Hourly: $ {{job.hourly}}</td>
+        <td>{{job.createdDate}}</td>
+        <td>
+          <button type="submit"
+                  ui-sref="jobOrder.delete({id:job.id})"
+                  class="btn btn-danger btn-sm">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--------------------- HIRING CONTACTS   ------------------------>
+  <div class="table-responsive well">
+    <table class="table table-striped">
+      <h3>
+        <span>Hiring Contacts</span>
+        <button class="btn btn-success btn-xs" ui-sref="applicant-detail.hiring-contact({id:vm.applicant.id})">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+      </h3>
+      <thead>
+      <tr>
+        <td>Position Title</td>
+        <td>Name</td>
+        <td>Email</td>
+      </tr>
+      </thead>
+      <tbody>
+      <tr ng-repeat="contact in vm.applicant.hiringContacts track by $index">
+        <td><a ui-sref="applicant-detail({id:contact.id})">{{contact.jobTitle}}</a></td>
+        <td>{{contact.firstName}}, {{contact.lastName}}</a></td>
+        <td>{{contact.email1}}</td>
+        <td>
+          <button type="submit"
+                  ui-sref="hiring-contact.delete({id:contact.id})"
+                  class="btn btn-danger btn-sm">
+            <span class="glyphicon glyphicon-remove-circle"></span>&nbsp;<span translate="entity.action.delete"></span>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!--------------------- ASSIGN TO USERS   ------------------------>
+  <div class="table-responsive well">
+    <div class="form-group">
+      <label>Assign to Users</label>
+      <select class="form-control" multiple name="users" ng-model="vm.applicant.users"
+              ng-options="user as (user.lastName +', '+user.firstName) for user in vm.users track by user.id" disabled></select>
+    </div>
+  </div>
+
+  <!--------------------- Resume/Attachments   ------------------------>
+  <div class="row">
+    <div class="table-responsive well">
+      <table class="table table-striped">
+        <button class="btn btn-success btn-xs pull-right">
+          <span class="glyphicon glyphicon-plus"></span>
+        </button>
+        <h3>Resume/Attachments</h3>
+        <thead>
+        <tr>
+          <th>Skills:
+            <button class="btn btn-success btn-xs" ng-click="vm.skillsEditable = !vm.skillsEditable">
+              <span class="glyphicon glyphicon-pencil"></span>
+            </button>
+            <button ng-show="vm.skillsEditable" ng-click="vm.skillsEditable = !vm.skillsEditable"
+                    class="btn btn-danger btn-xs">
+              <span class="glyphicon glyphicon-ban-circle"></span>
+            </button>
+            <span ng-show="vm.skillsEditable">
+                             <input type="text" ng-model="vm.newSkill"
+                                    uib-typeahead="skill as skill.name for skill in vm.applicant.skills | filter:$viewValue | limitTo:8">
+                             <button ng-click="vm.addSkill()" class="btn btn-success btn-xs">
+                             <span class="glyphicon glyphicon-plus"></span> add skill
+                             </button>
+                         </span>
+          </th>
+          <th></th>
+          <th>pdf</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <!-- <td>{{applicant_resume.skills}}</td> -->
+          <td ng-hide="vm.skillsEditable"><span ng-repeat="skill in vm.applicant.skills track by $index">{{ skill.name }}{{$last ? '' : ', '}}</span>
+          </td>
+          <td ng-show="vm.skillsEditable">
+                      <span ng-repeat="skill in vm.applicant.skills track by $index">
+                          {{ skill.name }}
+                          <button class="btn btn-danger btn-xs">
+                              <span class="glyphicon glyphicon-remove-circle" ng-click="vm.deleteSkill($index);"></span>
+                          </button>
+                      </span>
+          </td>
+          <td></td>
+          <!-- <td>{{applicant_resume.pdf}}</td> -->
+          <td><a>John_Doe_Resume.pdf</a></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!------------------- COMPENSATION   ------------------------>
+  <div class="row">
+    <div class="applicant-compensation well">
+      <h3>Compensation:
+        <button ng-hide="vm.compensationEditable" ng-click="vm.compensationEditable = !vm.compensationEditable"
+                type="submit" class="btn btn-success btn-sm">
+          <span class="glyphicon glyphicon-pencil"></span></button>
+        <button ng-show="vm.compensationEditable" class="btn btn-success" ng-click="vm.contactSave()">
+          save
+        </button>
+        <button ng-show="vm.compensationEditable" class="btn btn-danger" ng-click="vm.cancelContactSave()">
+          cancel
+        </button>
+      </h3>
+      <div class="row">
+        <div class="col-xs-4">
+          <table>
+            <tr>
+              <td><span class="label label-default">Current Salary</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.currentSalary || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.currentSalary">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Desired Salary</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.desiredSalary || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.desiredSalary">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Minimum Salary</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.minSalary || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.minSalary">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Current Total Comp</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.currentTotalComp || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.currentTotalComp">
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-xs-4">
+          <table>
+            <tr>
+              <td><span class="label label-default">Current Hourly Rate</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.currentHourlyRate || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.currentHourlyRate">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Desired Hourly Rate</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ vm.applicant.desiredHourlyRate || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.desiredHourlyRate">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Minimum Hourly Rate</span></td>
+              <td>
+                <span ng-hide="vm.compensationEditable">{{ applicant.minHourlyRate || 'empty' }}</span>
+                <input type="text" class="form-control" ng-show="vm.compensationEditable"
+                       ng-model="vm.applicant.minHourlyRate">
+              </td>
+            </tr>
+            <tr>
+              <td><span class="label label-default">Benefits</span></td>
+              <td>
+                <label class="checkbox-inline"><input ng-model="vm.applicant.pto" ng-disabled="!vm.compensationEditable"
+                                                      type="checkbox" value="">PTO</label>
+                <label class="checkbox-inline"><input ng-model="vm.applicant.health"
+                                                      ng-disabled="!vm.compensationEditable"
+                                                      type="checkbox" value="">Health</label>
+              </td>
+          </table>
+        </div>
+        <div class="col-xs-4">
+          Comments: <textarea class="form-control" ng-disabled="!vm.compensationEditable"
+                              ng-model="vm.applicant.compensationComments"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!------------------- WORK HISTORY   ------------------------>
+  <div class="row">
+    <work-history applicant="vm.applicant"></work-history>
+  </div>
+
+  <!---------------- GENERAL COMMENTS  ----------------------->
+  <div class="row">
+    <div class="table-responsive well">
+      <table class="table table-striped">
+        <h3><span>General Comments  </span>
+          <button ng-hide="vm.editableComment" ng-click="vm.editableComment = !vm.editableComment"
+                  type="submit" class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"> </span></button>
+          <button ng-show="vm.editableComment" class="btn btn-success" ng-click="vm.saveComment()">save</button>
+          <button ng-show="vm.editableComment" class="btn btn-danger" ng-click="vm.cancelComment()">cancel
+          </button>
+        </h3>
+        <tbody>
+        <tr>
+          <td>
+            <textarea class="form-control" ng-disabled="!vm.editableComment" ng-model="vm.applicantComment"></textarea>
+          </td>
+        </tr>
+        <tr ng-repeat="applicantComment in vm.applicant.applicantComments track by $index">
+          <td>{{applicantComment.comment}}</td>
+          <td>
+            <button ng-click="vm.removeGenComments($index);" class="btn btn btn-danger btn-xs pull-right"></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- END GENERAL COMMENTS -->
+
+  <!---------------- INTERNAL COMMENTS ----------------------->
+  <div class="row">
+    <div class="table-responsive well">
+      <table class="table table-striped">
+        <h3><span>Internal Comments  </span>
+          <button ng-hide="vm.internalCommentsEditable"
+                  ng-click="vm.internalCommentsEditable = !vm.internalCommentsEditable" type="submit"
+                  class="btn btn-success btn-sm"><span class="glyphicon glyphicon-plus"></span></button>
+          <button ng-show="vm.internalCommentsEditable" class="btn btn-success" ng-click="vm.internalCommentsSave()">
+            save
+          </button>
+          <button ng-show="vm.internalCommentsEditable" class="btn btn-danger"
+                  ng-click="vm.cancelInternalCommentsSave()">cancel
+          </button>
+        </h3>
+        <tbody>
+        <tr>
+          <td>
+            <textarea class="form-control" ng-disabled="!vm.internalCommentsEditable"
+                      ng-model="vm.applicantInternalComment"></textarea>
+          </td>
+        </tr>
+        <tr ng-repeat="applicantInternalComment in vm.applicant.applicantInternalComments track by $index">
+          <td>{{applicantInternalComment.comment}}</td>
+          <td>
+            <button ng-click="vm.removeInternalComments($index);" class="btn btn btn-danger btn-xs pull-right"></button>
+          </td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+  <!-- END INTERNAL COMMENTS -->
+
+  <!---------------- RESUME ----------------------->
+  <div class="well">
+    <h5>Copy and Paste Resume Here:
+      <button ng-hide="vm.resumeEditable" class="btn btn-success btn-xs"
+              ng-click="vm.resumeEditable = !vm.resumeEditable">
+        <span class="glyphicon glyphicon-pencil"></span>
+      </button>
+      <button ng-show="vm.resumeEditable" class="btn btn-success btn-xs" ng-click="vm.contactSave()">save</button>
+      <button ng-show="vm.resumeEditable" class="btn btn-success btn-xs" ng-click="vm.cancelContactSave()">cancel
+      </button>
+    </h5>
+    <textarea rows="25" ng-show="vm.resumeEditable" class="form-control" ng-model="vm.applicant.resume"></textarea>
+    <div ng-hide="vm.resumeEditable">
+      <pre>{{ vm.applicant.resume }}</pre>
+    </div>
+  </div>
+
+  <button type="submit"
+          onclick="window.history.back()"
+          class="btn btn-success">
+    <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span translate="entity.action.back"> Back</span>
+  </button>
+</div>

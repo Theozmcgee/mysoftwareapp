@@ -1,0 +1,82 @@
+<div ng-cloak>
+  <div class="row">
+    <div class="col-md-2">
+      <span class="img-responsive img-rounded"></span>
+    </div>
+    <div class="col-md-8">
+      <h1>Welcome, Recruit Smart!</h1>
+
+      <div ng-switch="vm.isAuthenticated()">
+        <div class="alert alert-warning" ng-switch-when="false">
+          If you want to <a class="alert-link" href="" ng-click="vm.login()">sign in</a>, you can try the default
+          accounts:<br/>- Administrator (login="admin" and password="admin") <br/>- User (login="user" and
+          password="user").
+        </div>
+        <div class="alert alert-warning" ng-switch-when="false">
+          You don't have an account yet? <a class="alert-link" ui-sref="register">Register a new account</a>
+        </div>
+
+        <div class="alert alert-success" ng-switch-when="true">
+          <h3>Hello, {{vm.account.firstName}} {{vm.account.lastName}}!</h3>
+        </div>
+        <div ng-switch-when="true">
+          <div class="dashboard">
+            <div class="table-responsive well">
+              <div class="crescendo-well">
+                <div class="row">
+                  <div class="col-md-4">
+                    <button class="btn btn-sm btn-primary" ng-click="vm.openGP()"><span class="glyphicon glyphicon-th-list"></span> GP Calculator</button>&nbsp;&nbsp;
+                    <button class="btn btn-sm btn-primary" ui-sref="search"><span class="glyphicon glyphicon-search"></span> Search</button>
+                  </div>
+                  <span class="pull-right">
+                <button uib-popover-template="dynamicPopover.templateUrl"
+                        popover-title="{{dynamicPopover.title}}"
+                        popover-placement="bottom"
+                        popover-trigger="outsideClick" type="button"
+                        class="btn btn-sm btn-primary">Total assigned Jobs:
+                  <span class="badge text-danger">{{ vm.account.jobOrders.length }}</span></button></span>
+                </div>
+                <h2><span>Dashboard</span></h2>
+              </div>
+              <div class="table-responsive">
+                <table class="jh-table table table-striped table-condensed">
+                <thead>
+                <th>Folder</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                </thead>
+                <tbody ng-repeat="bucketList in vm.bucket track by bucketList.id">
+                <tr class="success">
+                  <td><i class="fas fa-folder-open"></i>&nbsp;{{bucketList.name}}</td>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                  <th></th>
+                </tr>
+                <tr ng-repeat="applicant in vm.applicants track by applicant.id"  ng-if="bucketList.name == applicant.hotListBucket.name">
+                  <td></td>
+                  <th class="info"><i class="fas fa-address-book"></i>&nbsp;{{applicant.hotListType}}</th>
+                  <td class="info"><a ui-sref="applicant-detail({id:applicant.applicant.id})">{{ applicant.applicant.firstName }} {{ applicant.applicant.lastName }}</a></td>
+                  <td class="info">&nbsp;&nbsp;</td>
+                  <td class="info">{{ applicant.applicant.title }}</td>
+                </tr>
+                <tr ng-repeat="jobOrder in vm.jobOrders track by jobOrder.id" ng-if="bucketList.name == jobOrder.hotListBucket.name">
+                  <td></td>
+                  <th class="warning"><i class="fas fa-briefcase"></i>&nbsp;{{jobOrder.hotListType}}</th>
+                  <th class="warning"><a ui-sref="job-order-detail({id:jobOrder.id})">{{jobOrder.jobOrder.title}}</a></th>
+                  <td class="warning">{{ jobOrder.jobOrder.jobType }}</td>
+                  <td class="warning">{{ jobOrder.jobOrder.jobStatus }}</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
